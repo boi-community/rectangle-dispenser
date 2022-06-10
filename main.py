@@ -165,12 +165,13 @@ async def on_message(message):
 		# iterate over responses array to send responses. uses a counter to detect the first message for the @ reply
 		for i in range(len(resarray)):
 			# if image has been cached
-			if (data[resarray[i][1]]["fileList"][resarray[i][0]]):
+			#if (data[resarray[i][1]]["fileList"][resarray[i][0]]):
 				#read the image
-				with open(data[resarray[i][1]]["cacheDir"] + data[resarray[i][1]]["fileList"][resarray[i][0]], 'rb') as sendfile:
+			#	with open(data[resarray[i][1]]["cacheDir"] + data[resarray[i][1]]["fileList"][resarray[i][0]], 'rb') as sendfile:
 					#send the reply with file attached(with @ if reply to first match)
-					await message.channel.send(data[resarray[i][1]]["respList"][resarray[i][0]], reference=(message if i == 0 else None),file=discord.File(sendfile))
-			else:
+			#		await message.channel.send(data[resarray[i][1]]["respList"][resarray[i][0]], reference=(message if i == 0 else None),file=discord.File(sendfile))
+			#else:
+			if True:
 				# send reply with link (or simply text) if file is not cached
 				await message.channel.send(data[resarray[i][1]]["respList"][resarray[i][0]], reference=(message if i == 0 else None))
 
