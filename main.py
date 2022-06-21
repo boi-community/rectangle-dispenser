@@ -6,6 +6,7 @@ from thefuzz import process
 
 bot = commands.Bot(command_prefix='!')
 
+config = {}
 # bot token
 token = open("tokenFile","r").read().strip()
 
@@ -136,10 +137,11 @@ async def on_ready():
 @bot.event
 async def on_message(message):
 	# process only messages not starting with ! to avoid displaying on commands, and not made by bots
-	if (not message.author.bot and message.content != "" and message.content[0] != "!"):
+	content = message.content
+	if (not message.author.bot and content != "" and content[0] != "!"):
 		
 		#find all [something] pairs
-		matches = re.findall(globalRegex, message.content)
+		matches = re.findall(globalRegex, content)
 		# init response array
 		resarray = []
 
@@ -173,9 +175,12 @@ async def on_message(message):
 			#else:
 			if True:
 				# send reply with link (or simply text) if file is not cached
+				embed=discord.Embed(title="Couldn't Add", description=f"Entry **\'{_message}\'** already exists in \"{data[l]['setName']}\"!\nUse **`!update`** to change its value.", color=0xff0000)
+				embed.set_image()
+					await ctx.send(embed=embed)
 				await message.channel.send(data[resarray[i][1]]["respList"][resarray[i][0]], reference=(message if i == 0 else None))
 
-	elif (not message.author.bot and message.content != ""):
+	elif (not message.author.bot and content != ""):
 		# if !, process commands
 		await bot.process_commands(message)
 
