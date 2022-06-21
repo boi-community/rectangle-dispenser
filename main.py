@@ -177,7 +177,7 @@ async def on_message(message):
 				# send reply with link (or simply text) if file is not cached
 				embed=discord.Embed(title="Couldn't Add", description=f"Entry **\'{_message}\'** already exists in \"{data[l]['setName']}\"!\nUse **`!update`** to change its value.", color=0xff0000)
 				embed.set_image()
-					await ctx.send(embed=embed)
+				await ctx.send(embed=embed)
 				await message.channel.send(data[resarray[i][1]]["respList"][resarray[i][0]], reference=(message if i == 0 else None))
 
 	elif (not message.author.bot and content != ""):
