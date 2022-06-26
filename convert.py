@@ -2,6 +2,8 @@
 # This was a very quickly hacked together script. It does its purpose, it will (ideally) only be used once.
 # I've only uploaded this for posterity.
 
+# nvm apparently veesus intends to use this regularly :)
+
 import sqlite3
 import os
 import sys
@@ -23,9 +25,7 @@ with open(sys.argv[1]) as old_data:  # Play Inscryption
 
         print(f"Inserting trigger {trigger}, image {image} and response {response}")
 
-        test = "(?,?,?)"
-        # cursor.execute(f"INSERT INTO {sys.argv[2]} VALUES (?,?,?)", (trigger, image, response))
         cursor.execute(
-            f"INSERT INTO {sys.argv[2]} VALUES {test}", (trigger, image, response)
+            f"INSERT INTO {sys.argv[2]} VALUES (?,?,?)", (trigger, image, response)
         )
     conn.commit()
