@@ -58,10 +58,10 @@ with open(sys.argv[1]) as old_data:  # Play Inscryption
             f"Inserting trigger {entry['trigger']}, image {entry['image']} and response {entry['response']} into the {entry['cardset']} cardset"
         )
         cursor.execute(
-            f"DELETE FROM {entry['cardset']} WHERE TRIGGER = \"{entry['trigger']}\""
+            f"DELETE FROM {entry['cardset']} WHERE TRIGGER = ?", [entry["trigger"]]
         )
         cursor.execute(
             f"INSERT INTO {entry['cardset']} VALUES (?,?,?)",
             (entry["trigger"], entry["image"], entry["response"]),
         )
-        conn.commit()
+    conn.commit()
