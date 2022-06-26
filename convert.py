@@ -20,7 +20,7 @@ with open(sys.argv[1]) as old_data:  # Play Inscryption
     data = []
     for i in range(len(old_data)):
         line = old_data[i].strip().split("~")
-        if line[0] == "Key Terms":
+        if line[0] == "Key Terms" and sys.argv[2] == "official":
             sys.argv[
                 2
             ] = "game_help"  # ugly hack because response.txt has game help *and* official in one file
