@@ -12,6 +12,8 @@ plugin.add_checks(lightbulb.human_only)
 
 @plugin.listener(hikari.GuildMessageCreateEvent)
 async def on_message(event: hikari.GuildMessageCreateEvent) -> None:
+    if not event.message.content:
+        return
     if event.is_bot:
         return
     for cardset in config["cardsets"]:
