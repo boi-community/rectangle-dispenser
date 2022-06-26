@@ -24,7 +24,7 @@ with open(sys.argv[1]) as old_data:  # Play Inscryption
             response = response.split("https://")[0].rstrip()
 
         print(f"Inserting trigger {trigger}, image {image} and response {response}")
-
+        cursor.execute(f'DELETE FROM {sys.argv[2]} WHERE TRIGGER = "{trigger}"')
         cursor.execute(
             f"INSERT INTO {sys.argv[2]} VALUES (?,?,?)", (trigger, image, response)
         )
