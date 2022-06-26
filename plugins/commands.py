@@ -58,12 +58,12 @@ async def add(ctx: lightbulb.Context) -> None:
 @lightbulb.command("delete", "Delete a trigger and response")
 @lightbulb.implements(lightbulb.SlashCommand)
 async def delete(ctx: lightbulb.Context) -> None:
-    await db.remove(ctx.options.cardset, f'trigger = "{ctx.options.trigger}"')
     if not await db.query(
         f'SELECT trigger FROM {ctx.options.cardset} WHERE trigger = "{ctx.options.trigger}"'
     ):
         raise InvalidTriggerException()
 
+    await db.remove(ctx.options.cardset, f'trigger = "{ctx.options.trigger}"')
     await ctx.respond(
         f'Success! I have removed "{ctx.options.trigger}" from the {ctx.options.cardset} cardset.',
         flags=hikari.MessageFlag.EPHEMERAL,
