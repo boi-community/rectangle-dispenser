@@ -4,3 +4,4 @@ pyyaml
 thefuzz
 python-Levenshtein
 git+https://github.com/Rapptz/asqlite
+asyncio
