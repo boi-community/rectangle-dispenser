@@ -30,6 +30,8 @@ with open(sys.argv[1]) as old_data:  # Play Inscryption
                 )
             except sqlite3.OperationalError:
                 pass
+        if line[0] == "Template":
+            break
         if len(line) > 1:
             trigger = line[0]
             image = None
