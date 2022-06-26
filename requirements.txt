@@ -1,0 +1,8 @@
+asyncio
+hikari
+hikari-lightbulb
+pyyaml
+requests
+thefuzz
+python-Levenshtein
+git+https://github.com/Rapptz/asqlite

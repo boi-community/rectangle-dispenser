@@ -1,0 +1,24 @@
+# Replace YOUR_TOKEN_HERE with the token of your Discord bot.
+token: YOUR_TOKEN_HERE
+
+# Replace YOUR_USER_ID_HERE with the user ID for any users that should have permission to add, edit, or delete cards.
+# Multiple ID's can be added here.
+db_admins:
+  - YOUR_USER_ID_HERE
+
+# Place cardsets here. I've included delimiters for Official and Custom cards, as well as game mechanics 
+# just like the bot running in production, but you can replace this with your own values.
+cardsets:
+  official:
+    # These will be fed directly into a regex equation.
+    # [] is used by Regex, so two escape backslashes are needed-
+    # one to tell Python to ignore the backslash, 
+    # and one to be fed into Regex to tell it to ignore the bracket.
+    delim_start:  "\\[\\["
+    delim_end:    "\\]\\]"
+  custom:
+    delim_start:  "{{"
+    delim_end:    "}}"
+  game_help:
+    delim_start:  "<<"
+    delim_end:    ">>"

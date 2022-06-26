@@ -10,8 +10,13 @@ ENV/
 env.bak/
 venv.bak/
 
-config.yml
+config.yaml
+
 rectangle-dispenser.db
+rectangle-dispenser.db-shm
+rectangle-dispenser.db-wal
+
+legacy/
 
 .pytest_cache
 .vscode
