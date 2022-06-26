@@ -25,39 +25,6 @@ async def generate_embed(cardset: str, card: str, footer: str = None):
     return embed
 
 
-async def listen_test(
-    cardset, event, cards, components, triggers, predicate, embed, prev_id, next_id
-):
-    page = 1
-    while True:
-        try:
-            event = await event.app.wait_for(
-                hikari.InteractionCreateEvent,
-                timeout=60,
-                predicate=predicate,
-            )
-        except asyncio.TimeoutError:
-            embed.set_footer("Interaction has timed out.")
-            await response.edit(embed=embed, component=None)
-            return
-
-        assert isinstance(event.interaction, hikari.ComponentInteraction)
-
-        if event.interaction.custom_id == prev_id:
-            page = page - 1 if page > 1 else 1
-        elif event.interaction.custom_id == next_id:
-            page = page + 1 if page < len(cards) else len(cards)
-
-        match = extractOne(cards[page - 1], triggers, scorer=token_sort_ratio)[0]
-        embed = await generate_embed(cardset, match, f"Match {page} of {len(cards)}")
-
-        await event.interaction.create_initial_response(
-            hikari.ResponseType.MESSAGE_UPDATE,
-            embed=embed,
-            component=components,
-        )
-
-
 @plugin.listener(hikari.GuildMessageCreateEvent)
 async def on_message(event: hikari.GuildMessageCreateEvent) -> None:
     if (event.is_bot) or (not event.message.content):
