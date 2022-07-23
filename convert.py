@@ -19,7 +19,7 @@ with open(sys.argv[1]) as old_data:  # Play Inscryption
     old_data = old_data.readlines()
     data = []
     for i in range(len(old_data)):
-        line = old_data[i].strip().split("~")
+        line = old_data[i].strip().replace("’", "'").split("~")
         if line[0] == "Key Terms" and sys.argv[2] == "official":
             sys.argv[
                 2
