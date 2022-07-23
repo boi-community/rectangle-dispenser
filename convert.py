@@ -13,6 +13,10 @@ cursor = conn.cursor()
 
 with open(sys.argv[1]) as old_data:  # Play Inscryption
     try:
+        cursor.execute(f'DROP TABLE {sys.argv[2]}')
+    except sqlite3.OperationalError:
+        pass
+    try:
         cursor.execute(f'CREATE TABLE {sys.argv[2]} {("trigger", "image", "response")}')
     except sqlite3.OperationalError:
         pass
@@ -58,9 +62,6 @@ with open(sys.argv[1]) as old_data:  # Play Inscryption
     for entry in data:
         print(
             f"Inserting trigger {entry['trigger']}, image {entry['image']} and response {entry['response']} into the {entry['cardset']} cardset"
-        )
-        cursor.execute(
-            f"DELETE FROM {entry['cardset']} WHERE TRIGGER = ?", [entry["trigger"]]
         )
         cursor.execute(
             f"INSERT INTO {entry['cardset']} VALUES (?,?,?)",
