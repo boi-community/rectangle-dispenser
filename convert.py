@@ -11,6 +11,8 @@ import sys
 conn = sqlite3.connect("rectangle-dispenser.db")
 cursor = conn.cursor()
 
+sys.argv[2] = sys.argv[2].lower()
+
 with open(sys.argv[1]) as old_data:  # Play Inscryption
     try:
         cursor.execute(f'DROP TABLE {sys.argv[2]}')
