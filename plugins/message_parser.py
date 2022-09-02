@@ -6,6 +6,7 @@ import asyncio
 from thefuzz.fuzz import token_sort_ratio
 from thefuzz.process import extractOne
 from main import config
+from sqlite3 import OperationalError
 
 plugin = lightbulb.Plugin("Message Parser")
 plugin.add_checks(lightbulb.human_only)
@@ -45,7 +46,12 @@ async def on_message(event: hikari.GuildMessageCreateEvent) -> None:
             button_prev.add_to_container()
             button_next.add_to_container()
 
-            triggers = await db.queryall(f"select trigger from {cardset}")
+            try:
+                triggers = await db.queryall(f"select trigger from {cardset}")
+            except OperationalError as e:
+                if str(e) == "attempt to write a readonly database":
+                    triggers = await db.queryall_rw(f"select trigger from {cardset}")
+
             if not triggers:
                 raise Exception(
                     "No triggers for this cardset! Please add some into the database."

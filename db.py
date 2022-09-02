@@ -116,3 +116,37 @@ async def queryall(query: str):
                 if len(result[i]) == 1:
                     result[i] = result[i][0]
             return result
+
+async def query_rw(query: str):
+    """
+    Queries from the database.
+    - query: String containing the query for the database.
+    Returns query as a tuple if multiple variables were queried, or raw query otherwise
+    """
+    async with asqlite.connect("rectangle-dispenser.db") as conn:
+        async with conn.cursor() as cursor:
+            result = await (await cursor.execute(query)).fetchone()
+            if not result:
+                return None
+            result = tuple(result)
+            if len(result) == 1:
+                result = result[0]
+            return result
+
+
+async def queryall_rw(query: str):
+    """
+    Queries from the database.
+    - query: String containing the query for the database.
+    Returns a list of matching queries as tuples if multiple variables were queried, or raw list of matching queries otherwise
+    """
+    async with asqlite.connect("rectangle-dispenser.db") as conn:
+        async with conn.cursor() as cursor:
+            result = await (await cursor.execute(query)).fetchall()
+            if not result:
+                return None
+            result = [tuple(elem) for elem in result]
+            for i in range(len(result)):
+                if len(result[i]) == 1:
+                    result[i] = result[i][0]
+            return result
