@@ -38,7 +38,7 @@ async def on_message(event: hikari.GuildMessageCreateEvent) -> None:
         )
 
         if cards:
-            components = event.app.rest.build_action_row()
+            components = event.app.rest.build_message_action_row()
             button_prev = components.add_button(1, "prev")
             button_next = components.add_button(1, "next")
             button_prev.set_label("Previous")
