@@ -39,12 +39,12 @@ async def on_message(event: hikari.GuildMessageCreateEvent) -> None:
 
         if cards:
             components = event.app.rest.build_message_action_row()
-            button_prev = components.add_button(1, "prev")
-            button_next = components.add_button(1, "next")
-            button_prev.set_label("Previous")
-            button_next.set_label("Next")
-            button_prev.add_to_container()
-            button_next.add_to_container()
+            button_prev = components.add_interactive_button(
+                hikari.ButtonStyle.PRIMARY, "prev", label="Previous"
+            )
+            button_next = components.add_interactive_button(
+                hikari.ButtonStyle.PRIMARY, "next", label="Next"
+            )
 
             try:
                 triggers = await db.queryall(f"select trigger from {cardset}")
@@ -93,9 +93,9 @@ async def on_message(event: hikari.GuildMessageCreateEvent) -> None:
 
                     assert isinstance(event.interaction, hikari.ComponentInteraction)
 
-                    if event.interaction.custom_id == button_prev.custom_id:
+                    if event.interaction.custom_id == "prev":
                         page = page - 1 if page > 1 else 1
-                    elif event.interaction.custom_id == button_next.custom_id:
+                    elif event.interaction.custom_id == "next":
                         page = page + 1 if page < len(cards) else len(cards)
 
                     match = extractOne(
